@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ghcr.io/allstarlink/asl3-asterisk-ci
+          images: ghcr.io/allstarlink/asl3-ci
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
