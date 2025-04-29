@@ -6,8 +6,7 @@ on:
     - '*'
 
 jobs:
-
-  build:
+  create_release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
