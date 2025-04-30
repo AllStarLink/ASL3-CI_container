@@ -21,4 +21,7 @@ jobs:
           YEAR_FORMAT: "YY"
 
       - uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ inputs.new_tag }}
+
         
