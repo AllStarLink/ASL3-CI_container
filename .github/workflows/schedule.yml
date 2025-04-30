@@ -20,8 +20,6 @@ jobs:
       - name: CalVer
         id: calver
         uses: energostack/calver-action@v1
-        with:
-          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1
