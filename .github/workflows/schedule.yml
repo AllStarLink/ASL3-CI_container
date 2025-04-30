@@ -22,7 +22,6 @@ jobs:
         uses: mani-sh-reddy/calver-increment@v1.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          YEAR_FORMAT: "YY"
 
       - name: Create Release
         uses: ncipollo/release-action@v1
