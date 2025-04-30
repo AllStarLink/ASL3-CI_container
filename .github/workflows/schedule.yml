@@ -19,3 +19,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           YEAR_FORMAT: "YY"
+
+      - uses: ncipollo/release-action@v1
+        
