@@ -5,10 +5,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_tag:
+  create_release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -25,5 +28,38 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tagit.outputs.new_tag }}
+      
+      - name: Get Version
+        run: |
+          echo "Image Name : $IMAGE_NAME"
+          echo "Username : ${{ github.actor }}"
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} 
+    
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ghcr.io/allstarlink/asl3-ci
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
         
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          platforms: linux/amd64
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}        
