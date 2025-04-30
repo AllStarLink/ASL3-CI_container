@@ -17,16 +17,16 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - name: Increment and tag with CalVer
-        id: tagit
-        uses: mani-sh-reddy/calver-increment@v1.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: CalVer
+        id: calver
+        uses: energostack/calver-action@v1
+        with:
+          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.tagit.outputs.new_tag }}
+          tag: ${{ steps.calver.outputs.next_version }}
       
       - name: Get Version
         run: |
