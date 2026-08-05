@@ -1,7 +1,7 @@
 FROM debian:stable AS build
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y wget procps
+    apt-get install -y wget procps libusb-1.0-0 libusb-1.0-0-dev
 
 RUN sysctl net.ipv6.conf.all.disable_ipv6 && \
     cd /usr/src && \
