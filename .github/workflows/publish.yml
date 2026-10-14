@@ -85,4 +85,4 @@ jobs:
           build-args: |
             RPT_VER=${{inputs.rpt-ver}}
             AST_VER=${{inputs.ast-ver}}
-            REL_VER=${{package-ver}}
+            REL_VER=${{inputs.package-ver}}
