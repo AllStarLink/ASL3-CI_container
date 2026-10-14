@@ -20,20 +20,13 @@ on:
         type: string
         default: '1'
         required: true
-      arch:
-        description: 'Platform Architecture'
-        type: choice
-        options:
-        - amd64
-      os:
-        description: 'Debian Release Version'
-        type: choice
-        options:
-          - trixie
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DEFAULT_AST_VER: '22.10.1'
+  DEFAULT_RPT_VER: '3.10.8'
+  DEFAULT_PACKAGE_VER: '1'
 
 jobs:
   publish-asterisk-build-asl3-image:
@@ -54,7 +47,7 @@ jobs:
           echo "Username : ${{ github.actor }}"
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -83,6 +76,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            RPT_VER=${{inputs.rpt-ver}}
-            AST_VER=${{inputs.ast-ver}}
-            REL_VER=${{inputs.package-ver}}
+            RPT_VER=${{inputs.rpt-ver || env.DEFAULT_RPT_VER}}
+            AST_VER=${{inputs.ast-ver || env.DEFAULT_AST_VER}}
+            REL_VER=${{inputs.package-ver || env.DEFAULT_PACKAGE_VER}}
