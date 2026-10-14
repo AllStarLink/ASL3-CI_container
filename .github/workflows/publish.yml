@@ -4,6 +4,32 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      ast-ver:
+        description: 'Asterisk LTS Version Base'
+        type: string
+        default: '22.10.1'
+        required: true
+      rpt-ver:
+        description: 'app_rpt Version Tag'
+        type: string
+        default: '3.10.8'
+        required: true
+      package-ver:
+        description: 'Package Revision (usually 1)'
+        type: string
+        default: '1'
+        required: true
+      arch:
+        description: 'Platform Architecture'
+        type: choice
+        options:
+        - amd64
+      os:
+        description: 'Debian Release Version'
+        type: choice
+        options:
+          - trixie
 
 env:
   REGISTRY: ghcr.io
@@ -56,3 +82,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            RPT_VER=${{inputs.rpt-ver}}
+            AST_VER=${{inputs.ast-ver}}
+            REL_VER=${{package-ver}}
