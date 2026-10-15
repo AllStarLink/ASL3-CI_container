@@ -64,7 +64,7 @@ jobs:
             type=ref,event=tag
             type=semver,pattern={{version}}
             # 2. Add a dedicated tag format whenever manually triggered via workflow_dispatch
-            type=raw,value=${{ inputs.rpt-ver }}-${{ inputs.package-ver }},enable=${{ github.event_name == 'workflow_dispatch' }}
+            # type=raw,value=${{ inputs.rpt-ver }}-${{ inputs.package-ver }},enable=${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
