@@ -58,6 +58,13 @@ jobs:
         uses: docker/metadata-action@v6
         with:
           images: ghcr.io/allstarlink/asl3-ci
+          tags: |
+            # 1. Use the release tag as the image tag 
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            # 2. Add a dedicated tag format whenever manually triggered via workflow_dispatch
+            type=raw,value=${{ inputs.rpt-ver }}-${{ inputs.package-ver }},enable=${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
