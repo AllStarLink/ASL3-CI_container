@@ -36,6 +36,7 @@ ENV RPT_VER=$RPT_VER
 ENV AST_VER=$AST_VER
 
 RUN  git clone https://github.com/AllStarLink/asl3-asterisk.git && \
+	echo "usr/share/asterisk/third-party/pjproject/pjsua/*" >> ./asl3-asterisk/debian/not-installed && \
     ./asl3-asterisk/build-asl3 -t source build package && \
     cd /usr/src && \
     dpkg -i *.deb && \
